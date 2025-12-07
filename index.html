@@ -248,6 +248,8 @@
     </style>
 </head>
 <body>
+    <audio id="bgm" src="sound.mp3" preload="auto" loop></audio>
+
     <div id="root"></div>
 
     <script type="text/babel">
@@ -350,7 +352,13 @@
                                 </div>
 
                                 <div className="animate-fade-in-delayed-2">
-                                    <button className="btn-elegant" onClick={() => setIsOpen(true)}>
+                                    <button 
+                                        className="btn-elegant" 
+                                        onClick={() => {
+                                            setIsOpen(true);
+                                            document.getElementById('bgm').play().catch(()=>{});
+                                        }}
+                                    >
                                         <span>Open Invitation</span>
                                     </button>
                                 </div>
@@ -526,6 +534,19 @@
         }
 
         ReactDOM.render(<InvitationApp />, document.getElementById('root'));
+    </script>
+
+    <script>
+        // Panggil load() segera setelah DOM dimuat.
+        // Ini memastikan browser memuat file musik saat user masih melihat layar pembuka.
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgm = document.getElementById('bgm');
+            // Cek apakah elemen audio ada dan memiliki fungsi load()
+            if (bgm && typeof bgm.load === 'function') {
+                bgm.load(); 
+                console.log("Audio BGM mulai dimuat (preloaded).");
+            }
+        });
     </script>
 </body>
 </html>
