@@ -15,6 +15,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Playfair Display', serif;
             overflow-x: hidden;
@@ -22,6 +26,15 @@
         }
 
         .font-body { font-family: 'Cormorant Garamond', serif; }
+
+        /* Islamic ornament pattern - subtle */
+        .islamic-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(212,175,55,0.03) 1px, transparent 1px),
+                radial-gradient(circle at 80% 50%, rgba(212,175,55,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(30px); }
@@ -31,6 +44,11 @@
         @keyframes shimmer {
             0% { background-position: -1000px 0; }
             100% { background-position: 1000px 0; }
+        }
+
+        @keyframes gentle-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         .animate-fade-in {
@@ -58,88 +76,178 @@
         }
 
         .hero-bg {
-            background: radial-gradient(ellipse at top, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 1) 50%);
+            background: radial-gradient(ellipse at top, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 1) 50%);
+            position: relative;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(212,175,55,0.05) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(212,175,55,0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
         }
 
         .ornamental-line {
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 20px;
+            margin: 0 auto;
+        }
+
+        .ornamental-line::before,
+        .ornamental-line::after {
+            content: '';
+            flex: 1;
             height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            max-width: 45%;
+        }
+
+        /* Diamond di tengah ornamental line */
+        .ornamental-diamond {
+            width: 8px;
+            height: 8px;
+            background: #d4af37;
+            transform: rotate(45deg);
+            margin: 0 12px;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+            flex-shrink: 0;
+        }
+
+        /* Divider dengan ornamen islami */
+        .islamic-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem auto;
+        }
+
+        .islamic-divider::before,
+        .islamic-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            max-width: 150px;
+        }
+
+        .islamic-divider-icon {
+            width: 8px;
+            height: 8px;
+            background: #d4af37;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
         }
 
         .decorative-border {
             position: relative;
-            padding: 2rem;
+            padding: 2rem 1rem;
         }
 
         .decorative-border::before,
         .decorative-border::after {
             content: '';
             position: absolute;
-            width: 80px;
-            height: 80px;
-            border: 2px solid #d4af37;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
         }
 
         .decorative-border::before {
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            border-right: none;
-            border-bottom: none;
-            border-left: none;
         }
 
         .decorative-border::after {
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            border-left: none;
-            border-top: none;
-            border-right: none;
         }
 
         .ornament-corner {
             position: absolute;
             width: 80px;
             height: 80px;
-            border: 2px solid rgba(212, 175, 55, 0.5);
-            z-index: 10;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            z-index: 20;
+            transition: all 0.3s ease;
+        }
+
+        .ornament-corner::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: rgba(212, 175, 55, 0.3);
+            transform: rotate(45deg);
         }
 
         .corner-tl {
-            top: 2rem;
-            left: 2rem;
+            top: 1.5rem;
+            left: 1.5rem;
             border-right: none;
             border-bottom: none;
+            border-top-left-radius: 4px;
+        }
+
+        .corner-tl::before {
+            top: -7px;
+            left: -7px;
         }
 
         .corner-tr {
-            top: 2rem;
-            right: 2rem;
+            top: 1.5rem;
+            right: 1.5rem;
             border-left: none;
             border-bottom: none;
+            border-top-right-radius: 4px;
+        }
+
+        .corner-tr::before {
+            top: -7px;
+            right: -7px;
         }
 
         .corner-bl {
-            bottom: 2rem;
-            left: 2rem;
+            bottom: 1.5rem;
+            left: 1.5rem;
             border-right: none;
             border-top: none;
+            border-bottom-left-radius: 4px;
+        }
+
+        .corner-bl::before {
+            bottom: -7px;
+            left: -7px;
         }
 
         .corner-br {
-            bottom: 2rem;
-            right: 2rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
             border-left: none;
             border-top: none;
+            border-bottom-right-radius: 4px;
+        }
+
+        .corner-br::before {
+            bottom: -7px;
+            right: -7px;
         }
 
         .btn-elegant {
             position: relative;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid #d4af37;
-            background: transparent;
+            background: linear-gradient(135deg, rgba(212,175,55,0.05), transparent);
             color: #d4af37;
             padding: 1rem 3rem;
             font-size: 0.875rem;
@@ -148,11 +256,36 @@
             cursor: pointer;
             text-transform: uppercase;
             font-family: 'Playfair Display', serif;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+        }
+
+        .btn-elegant::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-elegant:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-elegant:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
+            border-color: #f4e4ba;
+        }
+
+        .btn-elegant span {
+            position: relative;
+            z-index: 1;
         }
 
         .section {
@@ -182,39 +315,73 @@
             width: 80px;
             height: 80px;
             border: 2px solid #d4af37;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.95);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(254, 243, 199, 0.95));
             font-size: 2rem;
             font-weight: 700;
             color: #1e293b;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .time-value::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .time-box:hover .time-value {
+            transform: scale(1.05);
         }
 
         .time-label {
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
             font-size: 0.875rem;
             color: #475569;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .photo-frame {
             position: relative;
             display: inline-block;
             margin: 2rem 0;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
         }
 
         .photo-rotate {
             position: absolute;
-            inset: 0;
-            border: 4px solid #d4af37;
+            inset: -4px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
             transform: rotate(3deg);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), transparent);
         }
 
         .photo-main {
             position: relative;
-            background: #1e293b;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
             border: 4px solid #d4af37;
+            border-radius: 4px;
             padding: 1rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(212, 175, 55, 0.2);
+        }
+
+        .photo-main::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 2px;
+            pointer-events: none;
         }
 
         .photo-placeholder {
@@ -225,25 +392,406 @@
             align-items: center;
             justify-content: center;
             font-size: 5rem;
+            border-radius: 4px;
+        }
+
+        .photo-main img {
+            border-radius: 4px;
         }
 
         .event-card {
-            background: white;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #ffffff, #fffef8);
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border-top: 4px solid #d4af37;
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-top: 4px solid #d4af37;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03), transparent 50%);
+            pointer-events: none;
         }
 
         .event-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Ornamen bunga/floral di sudut section */
+        .section-ornament {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .section-ornament.top-left {
+            top: 1rem;
+            left: 1rem;
+        }
+
+        .section-ornament.top-right {
+            top: 1rem;
+            right: 1rem;
+            transform: scaleX(-1);
+        }
+
+        .section-ornament.bottom-left {
+            bottom: 1rem;
+            left: 1rem;
+            transform: scaleY(-1);
+        }
+
+        .section-ornament.bottom-right {
+            bottom: 1rem;
+            right: 1rem;
+            transform: scale(-1);
+        }
+
+        /* Ornamen SVG floral pattern */
+        .floral-ornament {
+            fill: none;
+            stroke: #d4af37;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Ornamen tengah section - decorative element */
+        .center-ornament {
+            display: inline-block;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .center-ornament::before,
+        .center-ornament::after {
+            content: '❖';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #d4af37;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+
+        .center-ornament::before {
+            left: 0;
+        }
+
+        .center-ornament::after {
+            right: 0;
+        }
+
+        /* Ornamen border untuk card */
+        .ornate-card {
+            position: relative;
+        }
+
+        .ornate-card::before,
+        .ornate-card::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .ornate-card::before {
+            top: -1px;
+            left: -1px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .ornate-card::after {
+            bottom: -1px;
+            right: -1px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Particles effect - subtle gold dust */
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+        }
+
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, #f4e4ba, #d4af37);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: float-particle 6s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Ornamen garis dekoratif vertikal */
+        .vertical-ornament {
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(180deg, transparent, #d4af37, transparent);
+            margin: 1rem auto;
+            position: relative;
+        }
+
+        .vertical-ornament::before,
+        .vertical-ornament::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: #d4af37;
+            border-radius: 50%;
+        }
+
+        .vertical-ornament::before {
+            top: -4px;
+        }
+
+        .vertical-ornament::after {
+            bottom: -4px;
+        }
+
+        /* Section content wrapper untuk spacing yang lebih baik */
+        .section-content {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Enhanced card untuk quote/doa */
+        .quote-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(212, 175, 55, 0.05));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 700px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Ornamen untuk hero section - lebih elaborate */
+        .hero-ornament-top,
+        .hero-ornament-bottom {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 40px;
+            opacity: 0.3;
+        }
+
+        .hero-ornament-top {
+            top: 1rem;
+        }
+
+        .hero-ornament-bottom {
+            bottom: 1rem;
+            transform: translateX(-50%) scaleY(-1);
+        }
+
+        /* Ornamen samping untuk section */
+        .side-ornament {
+            position: absolute;
+            width: 60px;
+            height: 200px;
+            opacity: 0.1;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+        }
+
+        .side-ornament.left {
+            left: 0;
+        }
+
+        .side-ornament.right {
+            right: 0;
+            transform: translateY(-50%) scaleX(-1);
+        }
+
+        /* Icon SVG untuk konsistensi di semua device */
+        .icon-calendar,
+        .icon-clock {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .event-card:hover .icon-calendar,
+        .event-card:hover .icon-clock {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .icon-fill {
+            fill: #d4af37;
+            transition: fill 0.3s ease;
+        }
+
+        .icon-stroke {
+            stroke: #d4af37;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s ease;
+        }
+
+        .event-card:hover .icon-fill {
+            fill: #f4e4ba;
+        }
+
+        .event-card:hover .icon-stroke {
+            stroke: #f4e4ba;
+        }
+
+        /* Animasi tanaman/daun dekoratif */
+        @keyframes sway-left {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-8deg); }
+        }
+
+        @keyframes sway-right {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        @keyframes float-up-down {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes leaf-grow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .plant-decoration {
+            position: absolute;
+            opacity: 0.3;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        .plant-top-left {
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 280px;
+            animation: float-up-down 8s ease-in-out infinite;
+            transform-origin: top left;
+        }
+
+        .plant-top-right {
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 280px;
+            animation: float-up-down 8s ease-in-out infinite 1s;
+            transform-origin: top right;
+        }
+
+        .plant-bottom-left {
+            bottom: 0;
+            left: 0;
+            width: 280px;
+            height: 280px;
+            animation: sway-right 6s ease-in-out infinite;
+            transform-origin: bottom left;
+        }
+
+        .plant-bottom-right {
+            bottom: 0;
+            right: 0;
+            width: 280px;
+            height: 280px;
+            animation: sway-left 6s ease-in-out infinite;
+            transform-origin: bottom right;
+        }
+
+        /* Interaksi hover pada section dengan tanaman - lebih interaktif */
+        .section:hover .plant-top-left {
+            animation: float-up-down 4s ease-in-out infinite;
+            opacity: 0.45;
+        }
+
+        .section:hover .plant-top-right {
+            animation: float-up-down 4s ease-in-out infinite 0.5s;
+            opacity: 0.45;
+        }
+
+        .section:hover .plant-bottom-left {
+            animation: sway-right 3s ease-in-out infinite;
+            opacity: 0.45;
+        }
+
+        .section:hover .plant-bottom-right {
+            animation: sway-left 3s ease-in-out infinite;
+            opacity: 0.45;
+        }
+
+        /* Interaksi click/tap pada tanaman */
+        @keyframes plant-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .plant-decoration:active {
+            animation: plant-bounce 0.6s ease-in-out;
         }
 
         @media (max-width: 768px) {
-            .ornament-corner { width: 50px; height: 50px; }
+            .ornament-corner { width: 60px; height: 60px; }
+            .ornament-corner::before { width: 10px; height: 10px; }
+            .corner-tl, .corner-tr { top: 1rem; }
+            .corner-bl, .corner-br { bottom: 1rem; }
+            .corner-tl, .corner-bl { left: 1rem; }
+            .corner-tr, .corner-br { right: 1rem; }
             .time-value { width: 60px; height: 60px; font-size: 1.5rem; }
             .photo-placeholder { width: 250px; height: 250px; font-size: 4rem; }
+            .event-card { padding: 2rem 1.5rem; }
+            .quote-card { padding: 1.5rem; }
+            .section-ornament { width: 80px; height: 80px; }
+            .side-ornament { display: none; }
+            .hero-ornament-top, .hero-ornament-bottom { width: 150px; height: 30px; }
+            .center-ornament { padding: 0 1.5rem; }
+            .center-ornament::before, .center-ornament::after { font-size: 0.75rem; }
+            .icon-calendar, .icon-clock { width: 50px; height: 50px; }
+            .plant-top-left, .plant-top-right { width: 200px; height: 200px; }
+            .plant-bottom-left, .plant-bottom-right { width: 200px; height: 200px; }
+            .ornamental-diamond { width: 6px; height: 6px; margin: 0 8px; }
+        }
+
+        @media (max-width: 480px) {
+            .ornament-corner { width: 45px; height: 45px; }
+            .ornament-corner::before { width: 8px; height: 8px; }
+            .section-ornament { width: 60px; height: 60px; }
+            .ornate-card::before, .ornate-card::after { width: 20px; height: 20px; }
+            .plant-top-left, .plant-top-right { width: 150px; height: 150px; }
+            .plant-bottom-left, .plant-bottom-right { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -319,17 +867,37 @@
                         <div className="ornament-corner corner-bl"></div>
                         <div className="ornament-corner corner-br"></div>
 
+                        {/* Ornamen atas dan bawah hero */}
+                        <svg className="hero-ornament-top" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,20 Q50,10 100,20 T190,20" />
+                            <circle className="floral-ornament" cx="100" cy="20" r="3" fill="#d4af37" />
+                            <circle className="floral-ornament" cx="50" cy="15" r="2" fill="#d4af37" opacity="0.6" />
+                            <circle className="floral-ornament" cx="150" cy="15" r="2" fill="#d4af37" opacity="0.6" />
+                        </svg>
+                        <svg className="hero-ornament-bottom" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,20 Q50,10 100,20 T190,20" />
+                            <circle className="floral-ornament" cx="100" cy="20" r="3" fill="#d4af37" />
+                            <circle className="floral-ornament" cx="50" cy="15" r="2" fill="#d4af37" opacity="0.6" />
+                            <circle className="floral-ornament" cx="150" cy="15" r="2" fill="#d4af37" opacity="0.6" />
+                        </svg>
+
                         <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem' }}>
                             <div style={{ textAlign: 'center', maxWidth: '900px', width: '100%' }}>
                                 <div className="animate-fade-in" style={{ marginBottom: '2rem' }}>
-                                    <div className="ornamental-line" style={{ width: '250px', maxWidth: '80%', margin: '0 auto' }}></div>
+                                    <svg style={{ width: '40px', height: '40px', margin: '0 auto 1rem', opacity: 0.8 }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="#d4af37" d="M12,1L9,9L1,12L9,15L12,23L15,15L23,12L15,9L12,1Z" opacity="0.8" />
+                                        <path fill="#f4e4ba" d="M12,5L10.5,10.5L5,12L10.5,13.5L12,19L13.5,13.5L19,12L13.5,10.5L12,5Z" />
+                                    </svg>
+                                    <div className="ornamental-line" style={{ width: '250px', maxWidth: '80%', margin: '0 auto' }}>
+                                        <div className="ornamental-diamond"></div>
+                                    </div>
                                 </div>
 
                                 <div className="animate-fade-in" style={{ marginBottom: '2rem' }}>
-                                    <p style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', letterSpacing: '0.3em', color: '#fef3c7', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+                                    <p style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', letterSpacing: '0.3em', color: '#fef3c7', textTransform: 'uppercase', marginBottom: '0.75rem', fontWeight: 600 }}>
                                         You Are Invited
                                     </p>
-                                    <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)', color: 'rgba(254, 243, 199, 0.7)', fontStyle: 'italic' }}>
+                                    <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)', color: 'rgba(254, 243, 199, 0.75)', fontStyle: 'italic', lineHeight: 1.6 }}>
                                         To The Circumcision Celebration Of
                                     </p>
                                 </div>
@@ -343,10 +911,13 @@
                                 </div>
 
                                 <div className="animate-fade-in-delayed" style={{ marginBottom: '3rem' }}>
-                                    <p className="font-body" style={{ fontSize: 'clamp(0.75rem, 2vw, 1rem)', color: 'rgba(254, 243, 199, 0.6)', marginBottom: '0.75rem' }}>
+                                    <div className="islamic-divider" style={{ margin: '1.5rem auto' }}>
+                                        <div className="islamic-divider-icon"></div>
+                                    </div>
+                                    <p className="font-body" style={{ fontSize: 'clamp(0.75rem, 2vw, 1rem)', color: 'rgba(254, 243, 199, 0.7)', marginBottom: '0.75rem', letterSpacing: '0.05em' }}>
                                         Putra Tercinta dari
                                     </p>
-                                    <p style={{ fontSize: 'clamp(1.125rem, 3vw, 1.5rem)', color: '#fffbeb', fontWeight: 600, padding: '0 1rem' }}>
+                                    <p style={{ fontSize: 'clamp(1.125rem, 3vw, 1.5rem)', color: '#fffbeb', fontWeight: 600, padding: '0 1rem', lineHeight: 1.4 }}>
                                         {CONFIG.PARENT_NAMES}
                                     </p>
                                 </div>
@@ -364,10 +935,17 @@
                                 </div>
 
                                 <div className="animate-fade-in-delayed-2" style={{ marginTop: '3rem' }}>
-                                    <div className="ornamental-line" style={{ width: '250px', maxWidth: '80%', margin: '0 auto 2rem' }}></div>
-                                    <p className="font-body" style={{ fontSize: 'clamp(0.75rem, 2vw, 1rem)', color: 'rgba(254, 243, 199, 0.5)' }}>
-                                        {formatDate()}
-                                    </p>
+                                    <div className="ornamental-line" style={{ width: '250px', maxWidth: '80%', margin: '0 auto 1.5rem' }}>
+                                        <div className="ornamental-diamond"></div>
+                                    </div>
+                                    <div style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.1), transparent)', border: '1px solid rgba(212,175,55,0.3)', borderRadius: '8px', padding: '1rem 2rem', display: 'inline-block' }}>
+                                        <p className="font-body" style={{ fontSize: 'clamp(0.65rem, 1.5vw, 0.75rem)', color: 'rgba(254, 243, 199, 0.6)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '0.25rem' }}>
+                                            Save The Date
+                                        </p>
+                                        <p style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', color: '#fef3c7', fontWeight: 600 }}>
+                                            {formatDate()}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -377,12 +955,71 @@
 
             return (
                 <div>
-                    <section className="section" style={{ background: '#fffbeb' }}>
-                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%' }}>
-                            <h2 style={{ fontSize: 'clamp(1.875rem, 4vw, 2.5rem)', fontWeight: 700, color: '#1e293b', marginBottom: '1rem' }}>
-                                Hitungan Mundur
-                            </h2>
-                            <div className="ornamental-line" style={{ width: '100px', margin: '0 auto 3rem' }}></div>
+                    <section className="section islamic-pattern" style={{ background: '#fffbeb', position: 'relative', overflow: 'hidden' }}>
+                        {/* Ornamen sudut section */}
+                        <svg className="section-ornament top-left" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,10 Q30,10 40,30 Q50,50 30,70 Q10,90 10,110" />
+                            <path className="floral-ornament" d="M10,10 Q10,30 30,40 Q50,50 70,30 Q90,10 110,10" />
+                            <circle className="floral-ornament" cx="40" cy="40" r="4" fill="#d4af37" opacity="0.4" />
+                        </svg>
+                        <svg className="section-ornament bottom-right" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,10 Q30,10 40,30 Q50,50 30,70 Q10,90 10,110" />
+                            <path className="floral-ornament" d="M10,10 Q10,30 30,40 Q50,50 70,30 Q90,10 110,10" />
+                            <circle className="floral-ornament" cx="40" cy="40" r="4" fill="#d4af37" opacity="0.4" />
+                        </svg>
+
+                        {/* Tanaman dekoratif atas kiri - Bunga & Daun */}
+                        <svg className="plant-decoration plant-top-left" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                            {/* Bunga Mawar */}
+                            <g className="leaf">
+                                <circle cx="80" cy="80" r="25" fill="#d4af37" opacity="0.4"/>
+                                <circle cx="70" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="85" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="80" cy="65" r="15" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="80" cy="80" r="12" fill="#c9a961" opacity="0.7"/>
+                            </g>
+                            {/* Daun-daun */}
+                            <path className="leaf" d="M120,100 Q140,90 160,100 Q150,120 120,110 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M100,130 Q90,150 80,170 Q70,150 80,130 Z" fill="#d4af37" opacity="0.4"/>
+                            <path className="leaf" d="M140,130 Q160,140 180,150 Q160,160 140,150 Z" fill="#d4af37" opacity="0.5"/>
+                            <path className="leaf" d="M50,120 Q30,130 20,150 Q30,160 50,150 Z" fill="#d4af37" opacity="0.45"/>
+                            {/* Ranting kecil */}
+                            <path d="M80,80 Q100,100 120,120" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
+                            <path d="M80,80 Q60,100 40,130" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
+                        </svg>
+
+                        {/* Tanaman dekoratif atas kanan - Bunga & Daun */}
+                        <svg className="plant-decoration plant-top-right" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                            {/* Bunga Mawar */}
+                            <g className="leaf">
+                                <circle cx="200" cy="80" r="25" fill="#d4af37" opacity="0.4"/>
+                                <circle cx="210" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="195" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="200" cy="65" r="15" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="200" cy="80" r="12" fill="#c9a961" opacity="0.7"/>
+                            </g>
+                            {/* Daun-daun */}
+                            <path className="leaf" d="M160,100 Q140,90 120,100 Q130,120 160,110 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M180,130 Q190,150 200,170 Q210,150 200,130 Z" fill="#d4af37" opacity="0.4"/>
+                            <path className="leaf" d="M140,130 Q120,140 100,150 Q120,160 140,150 Z" fill="#d4af37" opacity="0.5"/>
+                            <path className="leaf" d="M230,120 Q250,130 260,150 Q250,160 230,150 Z" fill="#d4af37" opacity="0.45"/>
+                            {/* Ranting kecil */}
+                            <path d="M200,80 Q180,100 160,120" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
+                            <path d="M200,80 Q220,100 240,130" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
+                        </svg>
+
+                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
+                            <div className="center-ornament">
+                                <h2 style={{ fontSize: 'clamp(1.875rem, 4vw, 2.5rem)', fontWeight: 700, color: '#1e293b', marginBottom: '0.5rem' }}>
+                                    Hitungan Mundur
+                                </h2>
+                            </div>
+                            <p className="font-body" style={{ fontSize: '1rem', color: '#64748b', marginBottom: '1rem' }}>
+                                Menuju Hari Bahagia
+                            </p>
+                            <div className="ornamental-line" style={{ width: '100px', margin: '0 auto 3rem' }}>
+                                <div className="ornamental-diamond"></div>
+                            </div>
                             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '1rem' }}>
                                 <div className="time-box">
                                     <div className="time-value">{String(countdown.days).padStart(2, '0')}</div>
@@ -404,15 +1041,47 @@
                         </div>
                     </section>
 
-                    <section className="section" style={{ background: '#0f172a' }}>
-                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%' }}>
-                            <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'rgba(254, 243, 199, 0.9)', fontStyle: 'italic', marginBottom: '3rem', lineHeight: 1.8, maxWidth: '800px', margin: '0 auto 3rem', padding: '0 1rem' }}>
-                                بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم<br />
-                                <span style={{ fontSize: 'clamp(0.875rem, 2vw, 1rem)', display: 'block', marginTop: '1.5rem' }}>
+                    <section className="section" style={{ background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)', position: 'relative', overflow: 'hidden' }}>
+                        {/* Ornamen samping */}
+                        <svg className="side-ornament left" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M30,20 Q40,40 30,60 Q20,80 30,100 Q40,120 30,140 Q20,160 30,180" opacity="0.3" />
+                            <circle className="floral-ornament" cx="30" cy="60" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="100" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="140" r="3" fill="#d4af37" opacity="0.2" />
+                        </svg>
+                        <svg className="side-ornament right" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M30,20 Q40,40 30,60 Q20,80 30,100 Q40,120 30,140 Q20,160 30,180" opacity="0.3" />
+                            <circle className="floral-ornament" cx="30" cy="60" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="100" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="140" r="3" fill="#d4af37" opacity="0.2" />
+                        </svg>
+
+                        {/* Tanaman dekoratif floating untuk dark section */}
+                        <svg className="plant-decoration plant-top-left" viewBox="0 0 150 200" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse className="leaf" cx="75" cy="100" rx="40" ry="60" fill="#d4af37" opacity="0.08" transform="rotate(-30 75 100)" />
+                            <ellipse className="leaf" cx="75" cy="120" rx="35" ry="50" fill="#d4af37" opacity="0.1" transform="rotate(-45 75 120)" />
+                            <ellipse className="leaf" cx="75" cy="80" rx="30" ry="45" fill="#d4af37" opacity="0.12" transform="rotate(-15 75 80)" />
+                        </svg>
+
+                        <svg className="plant-decoration plant-top-right" viewBox="0 0 150 200" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse className="leaf" cx="75" cy="100" rx="40" ry="60" fill="#d4af37" opacity="0.08" transform="rotate(30 75 100)" />
+                            <ellipse className="leaf" cx="75" cy="120" rx="35" ry="50" fill="#d4af37" opacity="0.1" transform="rotate(45 75 120)" />
+                            <ellipse className="leaf" cx="75" cy="80" rx="30" ry="45" fill="#d4af37" opacity="0.12" transform="rotate(15 75 80)" />
+                        </svg>
+
+                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
+                            <div className="quote-card ornate-card">
+                                <p className="font-body" style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)', color: 'rgba(254, 243, 199, 0.95)', fontWeight: 600, marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                                    بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم
+                                </p>
+                                <div className="islamic-divider">
+                                    <div className="islamic-divider-icon"></div>
+                                </div>
+                                <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', color: 'rgba(254, 243, 199, 0.85)', fontStyle: 'italic', lineHeight: 1.8 }}>
                                     Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i 
                                     untuk menghadiri acara khitanan putra kami
-                                </span>
-                            </p>
+                                </p>
+                            </div>
 
                             <div className="photo-frame">
                                 <div className="photo-rotate"></div>
@@ -431,58 +1100,152 @@
                             </div>
 
 
-                            <h3 className="gold-text" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, margin: '2rem 0 1rem', padding: '0 1rem' }}>
+                            <h3 className="gold-text" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, margin: '2rem 0 0.5rem', padding: '0 1rem' }}>
                                 {CONFIG.CHILD_NAME}
                             </h3>
-                            <p style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.5rem)', color: 'rgba(254, 243, 199, 0.9)', fontWeight: 300 }}>
-                                Putra dari
+                            <div className="islamic-divider" style={{ margin: '1.5rem auto' }}>
+                                <div className="islamic-divider-icon"></div>
+                            </div>
+                            <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'rgba(254, 243, 199, 0.8)', fontWeight: 300, letterSpacing: '0.05em' }}>
+                                Putra Tercinta dari
                             </p>
-                            <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.875rem)', color: '#fffbeb', fontWeight: 600, marginTop: '0.5rem', padding: '0 1rem' }}>
+                            <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.875rem)', color: '#fffbeb', fontWeight: 600, marginTop: '0.75rem', padding: '0 1rem' }}>
                                 {CONFIG.PARENT_NAMES}
                             </p>
                         </div>
                     </section>
 
-                    <section className="section" style={{ background: '#fffbeb' }}>
-                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%' }}>
-                            <h2 style={{ fontSize: 'clamp(1.875rem, 4vw, 2.5rem)', fontWeight: 700, color: '#1e293b', marginBottom: '1rem' }}>
-                                Detail Acara
-                            </h2>
-                            <div className="ornamental-line" style={{ width: '100px', margin: '0 auto 3rem' }}></div>
+                    <section className="section islamic-pattern" style={{ background: 'linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%)', position: 'relative', overflow: 'hidden' }}>
+                        {/* Ornamen sudut section */}
+                        <svg className="section-ornament top-right" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,10 Q30,10 40,30 Q50,50 30,70 Q10,90 10,110" />
+                            <path className="floral-ornament" d="M10,10 Q10,30 30,40 Q50,50 70,30 Q90,10 110,10" />
+                            <circle className="floral-ornament" cx="40" cy="40" r="4" fill="#d4af37" opacity="0.4" />
+                        </svg>
+                        <svg className="section-ornament bottom-left" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,10 Q30,10 40,30 Q50,50 30,70 Q10,90 10,110" />
+                            <path className="floral-ornament" d="M10,10 Q10,30 30,40 Q50,50 70,30 Q90,10 110,10" />
+                            <circle className="floral-ornament" cx="40" cy="40" r="4" fill="#d4af37" opacity="0.4" />
+                        </svg>
+
+                        {/* Tanaman dekoratif bawah kiri */}
+                        <svg className="plant-decoration plant-bottom-left" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                            <path className="leaf" d="M50,250 Q30,230 20,200 Q30,180 60,190 Q70,210 50,250 Z" fill="#d4af37" opacity="0.5"/>
+                            <path className="leaf" d="M90,240 Q70,220 60,190 Q70,170 100,180 Q110,200 90,240 Z" fill="#d4af37" opacity="0.48"/>
+                            <path className="leaf" d="M130,230 Q110,210 100,180 Q110,160 140,170 Q150,190 130,230 Z" fill="#d4af37" opacity="0.45"/>
+                            <g className="leaf">
+                                <circle cx="80" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="75" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="85" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="80" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                            </g>
+                            <path d="M40,260 Q60,240 80,220 Q100,200 120,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                        </svg>
+
+                        {/* Tanaman dekoratif bawah kanan */}
+                        <svg className="plant-decoration plant-bottom-right" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                            <path className="leaf" d="M230,250 Q250,230 260,200 Q250,180 220,190 Q210,210 230,250 Z" fill="#d4af37" opacity="0.5"/>
+                            <path className="leaf" d="M190,240 Q210,220 220,190 Q210,170 180,180 Q170,200 190,240 Z" fill="#d4af37" opacity="0.48"/>
+                            <path className="leaf" d="M150,230 Q170,210 180,180 Q170,160 140,170 Q130,190 150,230 Z" fill="#d4af37" opacity="0.45"/>
+                            <g className="leaf">
+                                <circle cx="200" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="205" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="195" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="200" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                            </g>
+                            <path d="M240,260 Q220,240 200,220 Q180,200 160,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                        </svg>
+
+                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
+                            <div className="center-ornament">
+                                <h2 style={{ fontSize: 'clamp(1.875rem, 4vw, 2.5rem)', fontWeight: 700, color: '#1e293b', marginBottom: '0.5rem' }}>
+                                    Detail Acara
+                                </h2>
+                            </div>
+                            <p className="font-body" style={{ fontSize: '1rem', color: '#64748b', marginBottom: '1rem' }}>
+                                Waktu dan Tempat Pelaksanaan
+                            </p>
+                            <div className="ornamental-line" style={{ width: '100px', margin: '0 auto 3rem' }}>
+                                <div className="ornamental-diamond"></div>
+                            </div>
 
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', maxWidth: '900px', margin: '0 auto' }}>
                                 <div className="event-card">
-                                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📅</div>
-                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1e293b', marginBottom: '1rem' }}>Tanggal</h3>
-                                    <p style={{ fontSize: '1.125rem', color: '#475569' }}>
+                                    <svg className="icon-calendar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <rect className="icon-stroke" x="3" y="4" width="18" height="18" rx="2" />
+                                        <line className="icon-stroke" x1="16" y1="2" x2="16" y2="6" />
+                                        <line className="icon-stroke" x1="8" y1="2" x2="8" y2="6" />
+                                        <line className="icon-stroke" x1="3" y1="10" x2="21" y2="10" />
+                                        <rect className="icon-fill" x="7" y="14" width="2" height="2" rx="0.5" />
+                                        <rect className="icon-fill" x="11" y="14" width="2" height="2" rx="0.5" />
+                                        <rect className="icon-fill" x="15" y="14" width="2" height="2" rx="0.5" />
+                                    </svg>
+                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.75rem' }}>Tanggal</h3>
+                                    <div style={{ width: '40px', height: '2px', background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '0 auto 1rem' }}></div>
+                                    <p className="font-body" style={{ fontSize: '1.125rem', color: '#475569', lineHeight: 1.6 }}>
                                         {CONFIG.EVENT_DAY}<br />
-                                        {formatDate()}
+                                        <strong style={{ color: '#1e293b' }}>{formatDate()}</strong>
                                     </p>
                                 </div>
 
                                 <div className="event-card">
-                                    <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🕐</div>
-                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1e293b', marginBottom: '1rem' }}>Waktu</h3>
-                                    <p style={{ fontSize: '1.125rem', color: '#475569' }}>
-                                        {CONFIG.EVENT_TIME}
+                                    <svg className="icon-clock" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <circle className="icon-stroke" cx="12" cy="12" r="9" />
+                                        <polyline className="icon-stroke" points="12 6 12 12 16 14" />
+                                        <circle className="icon-fill" cx="12" cy="12" r="1.5" />
+                                    </svg>
+                                    <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.75rem' }}>Waktu</h3>
+                                    <div style={{ width: '40px', height: '2px', background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '0 auto 1rem' }}></div>
+                                    <p className="font-body" style={{ fontSize: '1.125rem', color: '#475569', lineHeight: 1.6 }}>
+                                        <strong style={{ color: '#1e293b' }}>{CONFIG.EVENT_TIME}</strong>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <section className="section" style={{ background: '#0f172a' }}>
-                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%' }}>
-                            <h2 style={{ fontSize: 'clamp(1.875rem, 4vw, 2.5rem)', fontWeight: 700, color: '#fffbeb', marginBottom: '1rem' }}>
-                                Lokasi Acara
-                            </h2>
-                            <div className="ornamental-line" style={{ width: '100px', margin: '0 auto 2rem' }}></div>
+                    <section className="section" style={{ background: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)', position: 'relative' }}>
+                        {/* Ornamen samping */}
+                        <svg className="side-ornament left" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M30,20 Q40,40 30,60 Q20,80 30,100 Q40,120 30,140 Q20,160 30,180" opacity="0.3" />
+                            <circle className="floral-ornament" cx="30" cy="60" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="100" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="140" r="3" fill="#d4af37" opacity="0.2" />
+                        </svg>
+                        <svg className="side-ornament right" viewBox="0 0 60 200" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M30,20 Q40,40 30,60 Q20,80 30,100 Q40,120 30,140 Q20,160 30,180" opacity="0.3" />
+                            <circle className="floral-ornament" cx="30" cy="60" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="100" r="3" fill="#d4af37" opacity="0.2" />
+                            <circle className="floral-ornament" cx="30" cy="140" r="3" fill="#d4af37" opacity="0.2" />
+                        </svg>
 
-                            <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'rgba(254, 243, 199, 0.9)', lineHeight: 1.8, maxWidth: '700px', margin: '0 auto 2rem', padding: '0 1rem' }}>
-                                📍 {CONFIG.ADDRESS}<br />
-                                {CONFIG.DISTRICT}<br />
-                                {CONFIG.CITY}
-                            </p>
+                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
+                            <div className="center-ornament">
+                                <h2 style={{ fontSize: 'clamp(1.875rem, 4vw, 2.5rem)', fontWeight: 700, color: '#fffbeb', marginBottom: '1rem' }}>
+                                    Lokasi Acara
+                                </h2>
+                            </div>
+                            <div className="ornamental-line" style={{ width: '100px', margin: '0 auto 2rem' }}>
+                                <div className="ornamental-diamond"></div>
+                            </div>
+
+                            <div className="ornate-card" style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.03))', border: '1px solid rgba(212,175,55,0.2)', borderRadius: '8px', padding: '2rem', maxWidth: '700px', margin: '0 auto 2rem' }}>
+                                <svg style={{ width: '50px', height: '50px', margin: '0 auto 1rem' }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path className="icon-stroke" d="M21,10 Q21,16 12,23 Q3,16 3,10 Q3,5 7,3 Q12,1 12,1 Q12,1 17,3 Q21,5 21,10 Z" strokeWidth="1.5" />
+                                    <circle className="icon-fill" cx="12" cy="10" r="3" />
+                                    <circle className="icon-stroke" cx="12" cy="10" r="3" strokeWidth="1.5" />
+                                </svg>
+                                <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'rgba(254, 243, 199, 0.95)', lineHeight: 1.8, fontWeight: 600 }}>
+                                    {CONFIG.ADDRESS}
+                                </p>
+                                <div className="islamic-divider" style={{ margin: '1rem auto' }}>
+                                    <div className="islamic-divider-icon"></div>
+                                </div>
+                                <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', color: 'rgba(254, 243, 199, 0.8)', lineHeight: 1.6 }}>
+                                    {CONFIG.DISTRICT}<br />
+                                    {CONFIG.CITY}
+                                </p>
+                            </div>
 
                             <div style={{ background: '#1e293b', padding: '1rem', borderRadius: '0.5rem', margin: '2rem auto', maxWidth: '900px' }}>
                                 <iframe
@@ -507,24 +1270,84 @@
                         </div>
                     </section>
 
-                    <section className="section" style={{ background: '#fffbeb' }}>
-                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%' }}>
-                            <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: '#475569', lineHeight: 1.8, maxWidth: '800px', margin: '0 auto 2rem', padding: '0 1rem' }}>
+                    <section className="section islamic-pattern" style={{ background: 'linear-gradient(180deg, #fef3c7 0%, #fffbeb 100%)', position: 'relative', overflow: 'hidden' }}>
+                        {/* Ornamen sudut section */}
+                        <svg className="section-ornament top-left" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,10 Q30,10 40,30 Q50,50 30,70 Q10,90 10,110" />
+                            <path className="floral-ornament" d="M10,10 Q10,30 30,40 Q50,50 70,30 Q90,10 110,10" />
+                            <circle className="floral-ornament" cx="40" cy="40" r="4" fill="#d4af37" opacity="0.4" />
+                        </svg>
+                        <svg className="section-ornament bottom-right" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <path className="floral-ornament" d="M10,10 Q30,10 40,30 Q50,50 30,70 Q10,90 10,110" />
+                            <path className="floral-ornament" d="M10,10 Q10,30 30,40 Q50,50 70,30 Q90,10 110,10" />
+                            <circle className="floral-ornament" cx="40" cy="40" r="4" fill="#d4af37" opacity="0.4" />
+                        </svg>
+
+                        {/* Tanaman dekoratif bawah kiri - Bunga & Daun */}
+                        <svg className="plant-decoration plant-bottom-left" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                            {/* Daun-daun besar */}
+                            <path className="leaf" d="M50,250 Q30,230 20,200 Q30,180 60,190 Q70,210 50,250 Z" fill="#d4af37" opacity="0.5"/>
+                            <path className="leaf" d="M90,240 Q70,220 60,190 Q70,170 100,180 Q110,200 90,240 Z" fill="#d4af37" opacity="0.48"/>
+                            <path className="leaf" d="M130,230 Q110,210 100,180 Q110,160 140,170 Q150,190 130,230 Z" fill="#d4af37" opacity="0.45"/>
+                            {/* Bunga kecil */}
+                            <g className="leaf">
+                                <circle cx="80" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="75" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="85" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="80" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                            </g>
+                            {/* Ranting */}
+                            <path d="M40,260 Q60,240 80,220 Q100,200 120,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                        </svg>
+
+                        {/* Tanaman dekoratif bawah kanan - Bunga & Daun */}
+                        <svg className="plant-decoration plant-bottom-right" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+                            {/* Daun-daun besar */}
+                            <path className="leaf" d="M230,250 Q250,230 260,200 Q250,180 220,190 Q210,210 230,250 Z" fill="#d4af37" opacity="0.5"/>
+                            <path className="leaf" d="M190,240 Q210,220 220,190 Q210,170 180,180 Q170,200 190,240 Z" fill="#d4af37" opacity="0.48"/>
+                            <path className="leaf" d="M150,230 Q170,210 180,180 Q170,160 140,170 Q130,190 150,230 Z" fill="#d4af37" opacity="0.45"/>
+                            {/* Bunga kecil */}
+                            <g className="leaf">
+                                <circle cx="200" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
+                                <circle cx="205" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="195" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
+                                <circle cx="200" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                            </g>
+                            {/* Ranting */}
+                            <path d="M240,260 Q220,240 200,220 Q180,200 160,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                        </svg>
+
+                        <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
+                            <svg style={{ width: '60px', height: '60px', margin: '0 auto 1.5rem' }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path className="icon-stroke" d="M12,21 Q8,19 5,16 Q3,14 3,11 Q3,8 5,6 L7,8 Q6,9 6,11 Q6,13 7,14 Q9,16 12,18" strokeWidth="1.5" />
+                                <path className="icon-stroke" d="M12,21 Q16,19 19,16 Q21,14 21,11 Q21,8 19,6 L17,8 Q18,9 18,11 Q18,13 17,14 Q15,16 12,18" strokeWidth="1.5" />
+                                <circle className="icon-fill" cx="12" cy="8" r="2" opacity="0.6" />
+                                <path className="icon-stroke" d="M10,8 Q10,6 12,4 Q14,6 14,8" strokeWidth="1.5" />
+                            </svg>
+                            
+                            <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: '#475569', lineHeight: 1.9, maxWidth: '800px', margin: '0 auto 2.5rem', padding: '0 1rem' }}>
                                 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i 
                                 berkenan hadir untuk memberikan doa restu kepada putra kami.
                             </p>
 
-                            <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', color: '#64748b', marginBottom: '2rem', fontStyle: 'italic', padding: '0 1rem' }}>
-                                "Dan hendaklah kamu meminta pertolongan (kepada Allah) dengan sabar dan shalat"<br />
-                                (QS. Al-Baqarah: 45)
-                            </p>
+                            <div className="islamic-divider" style={{ margin: '2rem auto' }}>
+                                <div className="islamic-divider-icon"></div>
+                            </div>
 
-                            <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #cbd5e1' }}>
-                                <p className="font-body" style={{ color: '#64748b' }}>
-                                    Kami yang berbahagia,
+                            <div className="ornate-card" style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.08), transparent)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: '8px', padding: '2rem', maxWidth: '700px', margin: '0 auto 2.5rem' }}>
+                                <svg style={{ width: '40px', height: '40px', margin: '0 auto 1rem', opacity: 0.6 }} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path className="icon-stroke" d="M4,19.5 Q4,18 5,17 L12,4 L19,17 Q20,18 20,19.5" strokeWidth="1.5" />
+                                    <path className="icon-stroke" d="M12,4 L12,19.5" strokeWidth="1.5" />
+                                    <line className="icon-stroke" x1="8" y1="10" x2="16" y2="10" strokeWidth="1" opacity="0.5" />
+                                    <line className="icon-stroke" x1="8" y1="13" x2="16" y2="13" strokeWidth="1" opacity="0.5" />
+                                    <line className="icon-stroke" x1="8" y1="16" x2="16" y2="16" strokeWidth="1" opacity="0.5" />
+                                </svg>
+                                <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', color: '#1e293b', marginBottom: '0.75rem', fontStyle: 'italic', lineHeight: 1.8, fontWeight: 600 }}>
+                                    "Dan hendaklah kamu meminta pertolongan (kepada Allah) dengan sabar dan shalat"
                                 </p>
-                                <p style={{ fontSize: 'clamp(1.125rem, 2.5vw, 1.25rem)', fontWeight: 600, color: '#1e293b', marginTop: '0.5rem', padding: '0 1rem' }}>
-                                    Keluarga {CONFIG.PARENT_NAMES}
+                                <div className="vertical-ornament" style={{ height: '40px', margin: '0.75rem auto' }}></div>
+                                <p className="font-body" style={{ fontSize: '0.875rem', color: '#64748b' }}>
+                                    (QS. Al-Baqarah: 45)
                                 </p>
                             </div>
                         </div>
@@ -537,15 +1360,32 @@
     </script>
 
     <script>
-        // Panggil load() segera setelah DOM dimuat.
-        // Ini memastikan browser memuat file musik saat user masih melihat layar pembuka.
+        // Interaktivitas tanaman - bounce saat diklik
         document.addEventListener('DOMContentLoaded', () => {
-            const bgm = document.getElementById('bgm');
-            // Cek apakah elemen audio ada dan memiliki fungsi load()
-            if (bgm && typeof bgm.load === 'function') {
-                bgm.load(); 
-                console.log("Audio BGM mulai dimuat (preloaded).");
-            }
+            const plants = document.querySelectorAll('.plant-decoration');
+            
+            plants.forEach(plant => {
+                plant.style.cursor = 'pointer';
+                plant.style.transition = 'all 0.3s ease';
+                
+                plant.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.15)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 300);
+                });
+
+                // Hover effect
+                plant.addEventListener('mouseenter', function() {
+                    this.style.opacity = '0.5';
+                    this.style.filter = 'drop-shadow(0 0 15px rgba(212,175,55,0.6))';
+                });
+
+                plant.addEventListener('mouseleave', function() {
+                    this.style.opacity = '0.3';
+                    this.style.filter = 'none';
+                });
+            });
         });
     </script>
 </body>
