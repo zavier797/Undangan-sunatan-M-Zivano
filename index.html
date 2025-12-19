@@ -411,21 +411,13 @@
             z-index: 2;
         }
 
-        .photo-frame img {
-            width: 100%;
-            aspect-ratio: 4/5;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            display: block;
-        }
-
         .photo-rotate {
             display: none;
         }
 
         .photo-main {
-            display: none;
+            position: relative;
+            width: 100%;
         }
 
         .photo-main::before {
@@ -433,11 +425,23 @@
         }
 
         .photo-placeholder {
-            display: none;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            display: block;
         }
 
         .photo-main img {
-            display: none;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            display: block;
         }
 
         .event-card {
