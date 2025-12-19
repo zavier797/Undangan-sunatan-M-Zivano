@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -29,30 +32,51 @@
             height: 100vh;
         }
 
-        .font-body { font-family: 'Cormorant Garamond', serif; }
+        .font-body {
+            font-family: 'Cormorant Garamond', serif;
+        }
 
         /* Islamic ornament pattern - subtle */
         .islamic-pattern {
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(212,175,55,0.03) 1px, transparent 1px),
-                radial-gradient(circle at 80% 50%, rgba(212,175,55,0.03) 1px, transparent 1px);
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
             background-position: 0 0, 25px 25px;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
+            0% {
+                background-position: -1000px 0;
+            }
+
+            100% {
+                background-position: 1000px 0;
+            }
         }
 
         @keyframes gentle-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         .animate-fade-in {
@@ -92,9 +116,9 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(212,175,55,0.05) 1px, transparent 1px),
-                radial-gradient(circle at 80% 70%, rgba(212,175,55,0.05) 1px, transparent 1px);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
             background-size: 60px 60px;
             pointer-events: none;
         }
@@ -251,7 +275,7 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid #d4af37;
-            background: linear-gradient(135deg, rgba(212,175,55,0.05), transparent);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), transparent);
             color: #d4af37;
             padding: 1rem 3rem;
             font-size: 0.875rem;
@@ -355,52 +379,65 @@
         }
 
         .photo-frame {
+            width: 65%;
+            max-width: 320px;
+            margin: 2rem auto;
             position: relative;
-            display: inline-block;
-            margin: 2rem 0;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: -12px;
+            bottom: -12px;
+            border: 3px double #d4af37;
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .photo-frame::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 1px solid #f4e4ba;
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            display: block;
         }
 
         .photo-rotate {
-            position: absolute;
-            inset: -4px;
-            border: 3px solid rgba(212, 175, 55, 0.3);
-            border-radius: 4px;
-            transform: rotate(3deg);
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), transparent);
+            display: none;
         }
 
         .photo-main {
-            position: relative;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border: 4px solid #d4af37;
-            border-radius: 4px;
-            padding: 1rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(212, 175, 55, 0.2);
+            display: none;
         }
 
         .photo-main::before {
-            content: '';
-            position: absolute;
-            inset: 8px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 2px;
-            pointer-events: none;
+            display: none;
         }
 
         .photo-placeholder {
-            width: 300px;
-            height: 300px;
-            background: #334155;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            border-radius: 4px;
+            display: none;
         }
 
         .photo-main img {
-            border-radius: 4px;
+            display: none;
         }
 
         .event-card {
@@ -532,8 +569,17 @@
 
         /* Particles effect - subtle gold dust */
         @keyframes float-particle {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
-            50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-20px) translateX(10px);
+                opacity: 0.6;
+            }
         }
 
         .particle {
@@ -675,23 +721,51 @@
 
         /* Animasi tanaman/daun dekoratif */
         @keyframes sway-left {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(-8deg); }
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(-8deg);
+            }
         }
 
         @keyframes sway-right {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(8deg); }
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(8deg);
+            }
         }
 
         @keyframes float-up-down {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
         }
 
         @keyframes leaf-grow {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .plant-decoration {
@@ -760,8 +834,15 @@
 
         /* Interaksi click/tap pada tanaman */
         @keyframes plant-bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
         }
 
         .plant-decoration:active {
@@ -769,37 +850,152 @@
         }
 
         @media (max-width: 768px) {
-            .ornament-corner { width: 60px; height: 60px; }
-            .ornament-corner::before { width: 10px; height: 10px; }
-            .corner-tl, .corner-tr { top: 0; }
-            .corner-bl, .corner-br { bottom: 0; }
-            .corner-tl, .corner-bl { left: 0; }
-            .corner-tr, .corner-br { right: 0; }
-            .time-value { width: 60px; height: 60px; font-size: 1.5rem; }
-            .photo-placeholder { width: 250px; height: 250px; font-size: 4rem; }
-            .event-card { padding: 2rem 1.5rem; }
-            .quote-card { padding: 1.5rem; }
-            .section-ornament { width: 80px; height: 80px; }
-            .side-ornament { display: none; }
-            .hero-ornament-top, .hero-ornament-bottom { width: 150px; height: 30px; }
-            .center-ornament { padding: 0 1.5rem; }
-            .center-ornament::before, .center-ornament::after { font-size: 0.75rem; }
-            .icon-calendar, .icon-clock { width: 50px; height: 50px; }
-            .plant-top-left, .plant-top-right { width: 200px; height: 200px; }
-            .plant-bottom-left, .plant-bottom-right { width: 200px; height: 200px; }
-            .ornamental-diamond { width: 6px; height: 6px; margin: 0 8px; }
+            .ornament-corner {
+                width: 60px;
+                height: 60px;
+            }
+
+            .ornament-corner::before {
+                width: 10px;
+                height: 10px;
+            }
+
+            .corner-tl,
+            .corner-tr {
+                top: 0;
+            }
+
+            .corner-bl,
+            .corner-br {
+                bottom: 0;
+            }
+
+            .corner-tl,
+            .corner-bl {
+                left: 0;
+            }
+
+            .corner-tr,
+            .corner-br {
+                right: 0;
+            }
+
+            .time-value {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .photo-frame {
+                width: 80%;
+                max-width: 280px;
+            }
+
+            .photo-placeholder {
+                width: 250px;
+                height: 250px;
+                font-size: 4rem;
+            }
+
+            .event-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .quote-card {
+                padding: 1.5rem;
+            }
+
+            .section-ornament {
+                width: 80px;
+                height: 80px;
+            }
+
+            .side-ornament {
+                display: none;
+            }
+
+            .hero-ornament-top,
+            .hero-ornament-bottom {
+                width: 150px;
+                height: 30px;
+            }
+
+            .center-ornament {
+                padding: 0 1.5rem;
+            }
+
+            .center-ornament::before,
+            .center-ornament::after {
+                font-size: 0.75rem;
+            }
+
+            .icon-calendar,
+            .icon-clock {
+                width: 50px;
+                height: 50px;
+            }
+
+            .plant-top-left,
+            .plant-top-right {
+                width: 200px;
+                height: 200px;
+            }
+
+            .plant-bottom-left,
+            .plant-bottom-right {
+                width: 200px;
+                height: 200px;
+            }
+
+            .ornamental-diamond {
+                width: 6px;
+                height: 6px;
+                margin: 0 8px;
+            }
         }
 
         @media (max-width: 480px) {
-            .ornament-corner { width: 45px; height: 45px; }
-            .ornament-corner::before { width: 8px; height: 8px; }
-            .section-ornament { width: 60px; height: 60px; }
-            .ornate-card::before, .ornate-card::after { width: 20px; height: 20px; }
-            .plant-top-left, .plant-top-right { width: 150px; height: 150px; }
-            .plant-bottom-left, .plant-bottom-right { width: 150px; height: 150px; }
+            .ornament-corner {
+                width: 45px;
+                height: 45px;
+            }
+
+            .ornament-corner::before {
+                width: 8px;
+                height: 8px;
+            }
+
+            .section-ornament {
+                width: 60px;
+                height: 60px;
+            }
+
+            .photo-frame {
+                width: 85%;
+                max-width: 260px;
+            }
+
+            .ornate-card::before,
+            .ornate-card::after {
+                width: 20px;
+                height: 20px;
+            }
+
+            .plant-top-left,
+            .plant-top-right {
+                width: 150px;
+                height: 150px;
+            }
+
+            .plant-bottom-left,
+            .plant-bottom-right {
+                width: 150px;
+                height: 150px;
+            }
         }
     </style>
 </head>
+
 <body>
     <audio id="bgm" src="sound.mp3" preload="auto" loop></audio>
 
@@ -928,12 +1124,12 @@
                                 </div>
 
                                 <div className="animate-fade-in-delayed-2">
-                                    <button 
-                                        className="btn-elegant" 
+                                    <button
+                                        className="btn-elegant"
                                         onClick={() => {
                                             setIsOpen(true);
                                             document.body.style.overflow = 'auto';
-                                            document.getElementById('bgm').play().catch(()=>{});
+                                            document.getElementById('bgm').play().catch(() => { });
                                         }}
                                     >
                                         <span>Open Invitation</span>
@@ -978,40 +1174,40 @@
                         <svg className="plant-decoration plant-top-left" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
                             {/* Bunga Mawar */}
                             <g className="leaf">
-                                <circle cx="80" cy="80" r="25" fill="#d4af37" opacity="0.4"/>
-                                <circle cx="70" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="85" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="80" cy="65" r="15" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="80" cy="80" r="12" fill="#c9a961" opacity="0.7"/>
+                                <circle cx="80" cy="80" r="25" fill="#d4af37" opacity="0.4" />
+                                <circle cx="70" cy="75" r="18" fill="#d4af37" opacity="0.5" />
+                                <circle cx="85" cy="75" r="18" fill="#d4af37" opacity="0.5" />
+                                <circle cx="80" cy="65" r="15" fill="#d4af37" opacity="0.6" />
+                                <circle cx="80" cy="80" r="12" fill="#c9a961" opacity="0.7" />
                             </g>
                             {/* Daun-daun */}
-                            <path className="leaf" d="M120,100 Q140,90 160,100 Q150,120 120,110 Z" fill="#d4af37" opacity="0.45"/>
-                            <path className="leaf" d="M100,130 Q90,150 80,170 Q70,150 80,130 Z" fill="#d4af37" opacity="0.4"/>
-                            <path className="leaf" d="M140,130 Q160,140 180,150 Q160,160 140,150 Z" fill="#d4af37" opacity="0.5"/>
-                            <path className="leaf" d="M50,120 Q30,130 20,150 Q30,160 50,150 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M120,100 Q140,90 160,100 Q150,120 120,110 Z" fill="#d4af37" opacity="0.45" />
+                            <path className="leaf" d="M100,130 Q90,150 80,170 Q70,150 80,130 Z" fill="#d4af37" opacity="0.4" />
+                            <path className="leaf" d="M140,130 Q160,140 180,150 Q160,160 140,150 Z" fill="#d4af37" opacity="0.5" />
+                            <path className="leaf" d="M50,120 Q30,130 20,150 Q30,160 50,150 Z" fill="#d4af37" opacity="0.45" />
                             {/* Ranting kecil */}
-                            <path d="M80,80 Q100,100 120,120" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
-                            <path d="M80,80 Q60,100 40,130" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
+                            <path d="M80,80 Q100,100 120,120" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3" />
+                            <path d="M80,80 Q60,100 40,130" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3" />
                         </svg>
 
                         {/* Tanaman dekoratif atas kanan - Bunga & Daun */}
                         <svg className="plant-decoration plant-top-right" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
                             {/* Bunga Mawar */}
                             <g className="leaf">
-                                <circle cx="200" cy="80" r="25" fill="#d4af37" opacity="0.4"/>
-                                <circle cx="210" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="195" cy="75" r="18" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="200" cy="65" r="15" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="200" cy="80" r="12" fill="#c9a961" opacity="0.7"/>
+                                <circle cx="200" cy="80" r="25" fill="#d4af37" opacity="0.4" />
+                                <circle cx="210" cy="75" r="18" fill="#d4af37" opacity="0.5" />
+                                <circle cx="195" cy="75" r="18" fill="#d4af37" opacity="0.5" />
+                                <circle cx="200" cy="65" r="15" fill="#d4af37" opacity="0.6" />
+                                <circle cx="200" cy="80" r="12" fill="#c9a961" opacity="0.7" />
                             </g>
                             {/* Daun-daun */}
-                            <path className="leaf" d="M160,100 Q140,90 120,100 Q130,120 160,110 Z" fill="#d4af37" opacity="0.45"/>
-                            <path className="leaf" d="M180,130 Q190,150 200,170 Q210,150 200,130 Z" fill="#d4af37" opacity="0.4"/>
-                            <path className="leaf" d="M140,130 Q120,140 100,150 Q120,160 140,150 Z" fill="#d4af37" opacity="0.5"/>
-                            <path className="leaf" d="M230,120 Q250,130 260,150 Q250,160 230,150 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M160,100 Q140,90 120,100 Q130,120 160,110 Z" fill="#d4af37" opacity="0.45" />
+                            <path className="leaf" d="M180,130 Q190,150 200,170 Q210,150 200,130 Z" fill="#d4af37" opacity="0.4" />
+                            <path className="leaf" d="M140,130 Q120,140 100,150 Q120,160 140,150 Z" fill="#d4af37" opacity="0.5" />
+                            <path className="leaf" d="M230,120 Q250,130 260,150 Q250,160 230,150 Z" fill="#d4af37" opacity="0.45" />
                             {/* Ranting kecil */}
-                            <path d="M200,80 Q180,100 160,120" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
-                            <path d="M200,80 Q220,100 240,130" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3"/>
+                            <path d="M200,80 Q180,100 160,120" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3" />
+                            <path d="M200,80 Q220,100 240,130" stroke="#d4af37" strokeWidth="2" fill="none" opacity="0.3" />
                         </svg>
 
                         <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
@@ -1084,7 +1280,7 @@
                                     <div className="islamic-divider-icon"></div>
                                 </div>
                                 <p className="font-body" style={{ fontSize: 'clamp(0.875rem, 2vw, 1.125rem)', color: 'rgba(254, 243, 199, 0.85)', fontStyle: 'italic', lineHeight: 1.8 }}>
-                                    Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i 
+                                    Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i
                                     untuk menghadiri acara khitanan putra kami
                                 </p>
                             </div>
@@ -1092,7 +1288,7 @@
                             <div className="photo-frame">
                                 <div className="photo-rotate"></div>
                                 <div className="photo-main">
-                                    <img 
+                                    <img
                                         src="zivano.jpg"
                                         alt="Foto Zivano"
                                         className="photo-placeholder"
@@ -1136,30 +1332,30 @@
 
                         {/* Tanaman dekoratif bawah kiri */}
                         <svg className="plant-decoration plant-bottom-left" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-                            <path className="leaf" d="M50,250 Q30,230 20,200 Q30,180 60,190 Q70,210 50,250 Z" fill="#d4af37" opacity="0.5"/>
-                            <path className="leaf" d="M90,240 Q70,220 60,190 Q70,170 100,180 Q110,200 90,240 Z" fill="#d4af37" opacity="0.48"/>
-                            <path className="leaf" d="M130,230 Q110,210 100,180 Q110,160 140,170 Q150,190 130,230 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M50,250 Q30,230 20,200 Q30,180 60,190 Q70,210 50,250 Z" fill="#d4af37" opacity="0.5" />
+                            <path className="leaf" d="M90,240 Q70,220 60,190 Q70,170 100,180 Q110,200 90,240 Z" fill="#d4af37" opacity="0.48" />
+                            <path className="leaf" d="M130,230 Q110,210 100,180 Q110,160 140,170 Q150,190 130,230 Z" fill="#d4af37" opacity="0.45" />
                             <g className="leaf">
-                                <circle cx="80" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="75" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="85" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="80" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                                <circle cx="80" cy="200" r="15" fill="#d4af37" opacity="0.5" />
+                                <circle cx="75" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="85" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="80" cy="200" r="8" fill="#c9a961" opacity="0.7" />
                             </g>
-                            <path d="M40,260 Q60,240 80,220 Q100,200 120,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                            <path d="M40,260 Q60,240 80,220 Q100,200 120,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4" />
                         </svg>
 
                         {/* Tanaman dekoratif bawah kanan */}
                         <svg className="plant-decoration plant-bottom-right" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-                            <path className="leaf" d="M230,250 Q250,230 260,200 Q250,180 220,190 Q210,210 230,250 Z" fill="#d4af37" opacity="0.5"/>
-                            <path className="leaf" d="M190,240 Q210,220 220,190 Q210,170 180,180 Q170,200 190,240 Z" fill="#d4af37" opacity="0.48"/>
-                            <path className="leaf" d="M150,230 Q170,210 180,180 Q170,160 140,170 Q130,190 150,230 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M230,250 Q250,230 260,200 Q250,180 220,190 Q210,210 230,250 Z" fill="#d4af37" opacity="0.5" />
+                            <path className="leaf" d="M190,240 Q210,220 220,190 Q210,170 180,180 Q170,200 190,240 Z" fill="#d4af37" opacity="0.48" />
+                            <path className="leaf" d="M150,230 Q170,210 180,180 Q170,160 140,170 Q130,190 150,230 Z" fill="#d4af37" opacity="0.45" />
                             <g className="leaf">
-                                <circle cx="200" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="205" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="195" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="200" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                                <circle cx="200" cy="200" r="15" fill="#d4af37" opacity="0.5" />
+                                <circle cx="205" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="195" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="200" cy="200" r="8" fill="#c9a961" opacity="0.7" />
                             </g>
-                            <path d="M240,260 Q220,240 200,220 Q180,200 160,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                            <path d="M240,260 Q220,240 200,220 Q180,200 160,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4" />
                         </svg>
 
                         <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
@@ -1292,35 +1488,35 @@
                         {/* Tanaman dekoratif bawah kiri - Bunga & Daun */}
                         <svg className="plant-decoration plant-bottom-left" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
                             {/* Daun-daun besar */}
-                            <path className="leaf" d="M50,250 Q30,230 20,200 Q30,180 60,190 Q70,210 50,250 Z" fill="#d4af37" opacity="0.5"/>
-                            <path className="leaf" d="M90,240 Q70,220 60,190 Q70,170 100,180 Q110,200 90,240 Z" fill="#d4af37" opacity="0.48"/>
-                            <path className="leaf" d="M130,230 Q110,210 100,180 Q110,160 140,170 Q150,190 130,230 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M50,250 Q30,230 20,200 Q30,180 60,190 Q70,210 50,250 Z" fill="#d4af37" opacity="0.5" />
+                            <path className="leaf" d="M90,240 Q70,220 60,190 Q70,170 100,180 Q110,200 90,240 Z" fill="#d4af37" opacity="0.48" />
+                            <path className="leaf" d="M130,230 Q110,210 100,180 Q110,160 140,170 Q150,190 130,230 Z" fill="#d4af37" opacity="0.45" />
                             {/* Bunga kecil */}
                             <g className="leaf">
-                                <circle cx="80" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="75" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="85" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="80" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                                <circle cx="80" cy="200" r="15" fill="#d4af37" opacity="0.5" />
+                                <circle cx="75" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="85" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="80" cy="200" r="8" fill="#c9a961" opacity="0.7" />
                             </g>
                             {/* Ranting */}
-                            <path d="M40,260 Q60,240 80,220 Q100,200 120,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                            <path d="M40,260 Q60,240 80,220 Q100,200 120,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4" />
                         </svg>
 
                         {/* Tanaman dekoratif bawah kanan - Bunga & Daun */}
                         <svg className="plant-decoration plant-bottom-right" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
                             {/* Daun-daun besar */}
-                            <path className="leaf" d="M230,250 Q250,230 260,200 Q250,180 220,190 Q210,210 230,250 Z" fill="#d4af37" opacity="0.5"/>
-                            <path className="leaf" d="M190,240 Q210,220 220,190 Q210,170 180,180 Q170,200 190,240 Z" fill="#d4af37" opacity="0.48"/>
-                            <path className="leaf" d="M150,230 Q170,210 180,180 Q170,160 140,170 Q130,190 150,230 Z" fill="#d4af37" opacity="0.45"/>
+                            <path className="leaf" d="M230,250 Q250,230 260,200 Q250,180 220,190 Q210,210 230,250 Z" fill="#d4af37" opacity="0.5" />
+                            <path className="leaf" d="M190,240 Q210,220 220,190 Q210,170 180,180 Q170,200 190,240 Z" fill="#d4af37" opacity="0.48" />
+                            <path className="leaf" d="M150,230 Q170,210 180,180 Q170,160 140,170 Q130,190 150,230 Z" fill="#d4af37" opacity="0.45" />
                             {/* Bunga kecil */}
                             <g className="leaf">
-                                <circle cx="200" cy="200" r="15" fill="#d4af37" opacity="0.5"/>
-                                <circle cx="205" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="195" cy="195" r="10" fill="#d4af37" opacity="0.6"/>
-                                <circle cx="200" cy="200" r="8" fill="#c9a961" opacity="0.7"/>
+                                <circle cx="200" cy="200" r="15" fill="#d4af37" opacity="0.5" />
+                                <circle cx="205" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="195" cy="195" r="10" fill="#d4af37" opacity="0.6" />
+                                <circle cx="200" cy="200" r="8" fill="#c9a961" opacity="0.7" />
                             </g>
                             {/* Ranting */}
-                            <path d="M240,260 Q220,240 200,220 Q180,200 160,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4"/>
+                            <path d="M240,260 Q220,240 200,220 Q180,200 160,180" stroke="#d4af37" strokeWidth="2.5" fill="none" opacity="0.4" />
                         </svg>
 
                         <div style={{ textAlign: 'center', maxWidth: '1200px', width: '100%', position: 'relative', zIndex: 2 }}>
@@ -1330,9 +1526,9 @@
                                 <circle className="icon-fill" cx="12" cy="8" r="2" opacity="0.6" />
                                 <path className="icon-stroke" d="M10,8 Q10,6 12,4 Q14,6 14,8" strokeWidth="1.5" />
                             </svg>
-                            
+
                             <p className="font-body" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: '#475569', lineHeight: 1.9, maxWidth: '800px', margin: '0 auto 2.5rem', padding: '0 1rem' }}>
-                                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i 
+                                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i
                                 berkenan hadir untuk memberikan doa restu kepada putra kami.
                             </p>
 
@@ -1369,12 +1565,12 @@
         // Interaktivitas tanaman - bounce saat diklik
         document.addEventListener('DOMContentLoaded', () => {
             const plants = document.querySelectorAll('.plant-decoration');
-            
+
             plants.forEach(plant => {
                 plant.style.cursor = 'pointer';
                 plant.style.transition = 'all 0.3s ease';
-                
-                plant.addEventListener('click', function() {
+
+                plant.addEventListener('click', function () {
                     this.style.transform = 'scale(1.15)';
                     setTimeout(() => {
                         this.style.transform = 'scale(1)';
@@ -1382,12 +1578,12 @@
                 });
 
                 // Hover effect
-                plant.addEventListener('mouseenter', function() {
+                plant.addEventListener('mouseenter', function () {
                     this.style.opacity = '0.5';
                     this.style.filter = 'drop-shadow(0 0 15px rgba(212,175,55,0.6))';
                 });
 
-                plant.addEventListener('mouseleave', function() {
+                plant.addEventListener('mouseleave', function () {
                     this.style.opacity = '0.3';
                     this.style.filter = 'none';
                 });
@@ -1395,4 +1591,5 @@
         });
     </script>
 </body>
+
 </html>
